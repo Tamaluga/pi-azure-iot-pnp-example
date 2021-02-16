@@ -1,0 +1,90 @@
+[
+  {
+    "@id": "dtmi:quickstartapp:RaspberryPiSenseHatB;1",
+    "@type": "Interface",
+    "contents": [
+      {
+        "@type": "Component",
+        "displayName": {
+          "en": "SensorTemp"
+        },
+        "name": "SensorTemp",
+        "schema": "dtmi:quickstartapp:SensorTemp;1"
+      },
+      {
+        "@type": "Component",
+        "displayName": {
+          "en": "SensorHumid"
+        },
+        "name": "SensorHumid",
+        "schema": "dtmi:quickstartapp:SensorHum;1"
+      }
+    ],
+    "displayName": {
+      "en": "Raspberry-Pi Sense Hat (B)"
+    },
+    "@context": [
+      "dtmi:iotcentral:context;2",
+      "dtmi:dtdl:context;2"
+    ]
+  },
+  {
+    "@context": [
+      "dtmi:iotcentral:context;2",
+      "dtmi:dtdl:context;2"
+    ],
+    "@id": "dtmi:quickstartapp:SensorTemp;1",
+    "@type": "Interface",
+    "contents": [
+      {
+        "@type": [
+          "Telemetry",
+          "Temperature"
+        ],
+        "description": {
+          "en": "Temperature in degrees Celsius."
+        },
+        "displayName": {
+          "en": "Temperature"
+        },
+        "name": "temperature",
+        "schema": "double",
+        "unit": "degreeCelsius"
+      }
+    ],
+    "description": {
+      "en": "Reports current temperature."
+    },
+    "displayName": {
+      "en": "SensorTemp"
+    }
+  },
+  {
+    "@context": [
+      "dtmi:iotcentral:context;2",
+      "dtmi:dtdl:context;2"
+    ],
+    "@id": "dtmi:quickstartapp:SensorHum;1",
+    "@type": "Interface",
+    "contents": [
+      {
+        "@type": [
+          "Telemetry",
+          "RelativeHumidity"
+        ],
+        "displayName": {
+          "en": "Humidity"
+        },
+        "name": "humidity",
+        "schema": "double",
+        "unit": "percent"
+      }
+    ],
+    "description": {
+      "en": "Current relative humidity."
+    },
+    "displayName": {
+      "en": "SensorHumid"
+    }
+  }
+]
