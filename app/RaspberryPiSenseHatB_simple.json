@@ -47,6 +47,20 @@
         "name": "pressure",
         "schema": "double",
         "unit": "kilopascal"
+      },
+      {
+        "@type": [
+          "Telemetry",
+          "Location"
+        ],
+        "description": {
+          "en": "Current location."
+        },
+        "displayName": {
+          "en": "Location"
+        },
+        "name": "location",
+        "schema": "geopoint"
       }
     ],
     "displayName": {

@@ -94,8 +94,15 @@ static float g_lpsTemperature = 0.0;
 // Current pressure of the LPS22HB.
 static float g_lpsPressure = 0.0;
 
-// Format string for sending temperature telemetry
+// Current location.
+static double g_latitude = 46.94808603191136;
+static double g_longitude = 7.459615618377996;
+static double g_altitude = 0.0;
+
+// Format string for sending sensor telemetry
 static const char g_sensorTelemetryBodyFormat[] = "{\"temperature\":%.02f},{\"humidity\":%.02f},{\"pressure\":%.02f}";
+// Format string for sending location telemetry
+static const char g_locationTelemetryBodyFormat[] = "{\"location\":{\"lat\":%.010f,\"lon\":%.010f,\"alt\":%.010f}}";
 
 // Size of buffer to store ISO 8601 time.
 #define TIME_BUFFER_SIZE 128
@@ -213,6 +220,33 @@ static void Raspi_DeviceTwinCallback(DEVICE_TWIN_UPDATE_STATE updateState, const
 
     json_value_free(rootValue);
     free(jsonStr);
+}
+
+//
+// Raspi_SendCurrentLocation sends a PnP telemetry indicating the current location
+//
+void Raspi_SendCurrentLocation(IOTHUB_DEVICE_CLIENT_LL_HANDLE deviceClientLL) 
+{
+    IOTHUB_MESSAGE_HANDLE messageHandle = NULL;
+    IOTHUB_CLIENT_RESULT iothubResult;
+
+    // Send location
+    char stringBuffer[64];
+
+    if (snprintf(stringBuffer, sizeof(stringBuffer), g_locationTelemetryBodyFormat, g_latitude, g_longitude, g_altitude) < 0)
+    {
+        LogError("snprintf of current location telemetry failed");
+    }
+    else if ((messageHandle = IoTHubMessage_CreateFromString(stringBuffer)) == NULL)
+    {
+        LogError("IoTHubMessage_CreateFromString failed");
+    }
+    else if ((iothubResult = IoTHubDeviceClient_LL_SendEventAsync(deviceClientLL, messageHandle, NULL, NULL)) != IOTHUB_CLIENT_OK)
+    {
+        LogError("Unable to send telemetry message, error=%d", iothubResult);
+    }
+
+    IoTHubMessage_Destroy(messageHandle);
 }
 
 //
@@ -481,6 +515,8 @@ int main(void)
         LogInfo("Successfully created device client handle.  Hit Control-C to exit program\n");
 
         int numberOfIterations = 0;
+
+        Raspi_SendCurrentLocation(deviceClientLL);
 
         while (true)
         {

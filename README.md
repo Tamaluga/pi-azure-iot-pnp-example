@@ -4,7 +4,7 @@ Example project with Azure-IoT-SDK-C and a data model (DigitalTwin Definition) f
 Works with the following configuration:
 
 - [Raspberry Pi Zero](https://www.raspberrypi.org/products/raspberry-pi-zero/)
-- [Sense HAT (B)](https://www.waveshare.com/wiki/Sense_HAT_(B))
+- [Sense HAT (B)](https://www.waveshare.com/wiki/Sense_HAT_\(B\))
 
 ## Status
 
